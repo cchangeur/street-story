@@ -1,6 +1,9 @@
 const elements = {
   locateButton: document.querySelector('#locateButton'),
   demoButton: document.querySelector('#demoButton'),
+  manualAddressForm: document.querySelector('#manualAddressForm'),
+  manualAddressInput: document.querySelector('#manualAddressInput'),
+  manualAddressButton: document.querySelector('#manualAddressButton'),
   statusText: document.querySelector('#statusText'),
   addressText: document.querySelector('#addressText'),
   streetText: document.querySelector('#streetText'),
@@ -90,6 +93,7 @@ init();
 function init() {
   elements.locateButton.addEventListener('click', handleLocateClick);
   elements.demoButton.addEventListener('click', handleDemoClick);
+  elements.manualAddressForm.addEventListener('submit', handleManualAddressSubmit);
 }
 
 async function handleLocateClick() {
@@ -135,12 +139,41 @@ async function handleDemoClick() {
   }
 }
 
+async function handleManualAddressSubmit(event) {
+  event.preventDefault();
+
+  const query = normalizeSpacing(elements.manualAddressInput.value || '');
+  if (!query) {
+    showError('Saisis une adresse pour lancer la recherche manuelle.');
+    return;
+  }
+
+  setLoading(true, `Recherche de l’adresse “${query}”...`);
+
+  try {
+    const address = await geocodeAddress(query);
+    await loadStoryFromAddress({ address, sourceLabel: 'ton adresse saisie' });
+  } catch (error) {
+    console.error(error);
+    showError(error?.message || "Impossible de traiter l'adresse saisie.");
+  } finally {
+    setLoading(false);
+  }
+}
+
 async function loadStoryFromCoordinates({ lat, lng, sourceLabel }) {
   hideError();
   hideStory();
   setStatus(`Recherche de l'adresse via ${sourceLabel}...`);
 
   const address = await reverseGeocode(lat, lng);
+  await loadStoryFromAddress({ address, sourceLabel });
+}
+
+async function loadStoryFromAddress({ address, sourceLabel }) {
+  hideError();
+  hideStory();
+  setStatus(`Analyse de l'adresse via ${sourceLabel}...`);
   renderAddress(address);
 
   const searchCandidates = buildStreetSearchCandidates(address.street || address.name || '');
@@ -190,6 +223,21 @@ async function reverseGeocode(lat, lng) {
   const feature = data?.features?.[0];
   if (!feature?.properties) {
     throw new Error("Aucune adresse exploitable n'a été trouvée pour cette position.");
+  }
+
+  return feature.properties;
+}
+
+async function geocodeAddress(query) {
+  const url = new URL('https://data.geopf.fr/geocodage/search');
+  url.searchParams.set('q', query);
+  url.searchParams.set('limit', '1');
+  url.searchParams.set('index', 'address');
+
+  const data = await fetchJson(url);
+  const feature = data?.features?.[0];
+  if (!feature?.properties) {
+    throw new Error("Aucune adresse exploitable n'a été trouvée pour cette saisie.");
   }
 
   return feature.properties;
@@ -541,6 +589,8 @@ async function fetchJson(url) {
 function setLoading(isLoading, message = 'Chargement...') {
   elements.locateButton.disabled = isLoading;
   elements.demoButton.disabled = isLoading;
+  elements.manualAddressInput.disabled = isLoading;
+  elements.manualAddressButton.disabled = isLoading;
   if (isLoading) {
     setStatus(message);
   }

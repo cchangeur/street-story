@@ -131,6 +131,49 @@ h1 {
   border: 1px solid rgba(148, 163, 184, 0.18);
 }
 
+.manual-form {
+  margin-top: 20px;
+}
+
+.manual-label {
+  display: block;
+  margin-bottom: 10px;
+  color: #d9e6f7;
+  font-weight: 600;
+}
+
+.manual-form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+
+.manual-input {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(2, 6, 23, 0.45);
+  color: var(--text);
+  padding: 0 18px;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.manual-input::placeholder {
+  color: #7f93af;
+}
+
+.manual-input:focus {
+  border-color: rgba(96, 165, 250, 0.8);
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
+}
+
+.manual-input:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
 .hero-note {
   margin: 20px 0 0;
   line-height: 1.55;
@@ -278,5 +321,9 @@ h1 {
   .panel {
     border-radius: 18px;
     padding: 18px;
+  }
+
+  .manual-form-row {
+    grid-template-columns: 1fr;
   }
 }

@@ -29,6 +29,25 @@
           </button>
         </div>
 
+        <form id="manualAddressForm" class="manual-form">
+          <label class="manual-label" for="manualAddressInput">
+            Ou saisis une adresse manuellement
+          </label>
+          <div class="manual-form-row">
+            <input
+              id="manualAddressInput"
+              class="manual-input"
+              type="text"
+              inputmode="text"
+              autocomplete="street-address"
+              placeholder="Ex. 10 avenue Charles-de-Gaulle, Paris"
+            />
+            <button id="manualAddressButton" type="submit" class="button button-secondary">
+              Chercher
+            </button>
+          </div>
+        </form>
+
         <p class="hero-note">
           V1 100 % statique, pensée pour GitHub Pages. Les données viennent de
           la Géoplateforme, Wikipédia, Wikidata et Wikimedia Commons.

@@ -72,7 +72,7 @@ Une V2 pourra migrer vers Next.js si on veut un backend, du cache serveur, des o
 
 - `docs/index.html` : interface principale
 - `docs/styles.css` : styles
-- `docs/app.js` : logique front, géolocalisation, reverse geocoding, matching Wikipédia/Wikidata
+- `docs/app.js` : logique front, géolocalisation, saisie manuelle d’adresse, reverse geocoding, matching Wikipédia/Wikidata
 - GitHub Pages publie le dossier `docs/` depuis la branche `main`
 
 ## Priorités techniques immédiates
@@ -80,5 +80,5 @@ Une V2 pourra migrer vers Next.js si on veut un backend, du cache serveur, des o
 1. Tester la V1 sur plusieurs rues réelles
 2. Améliorer la normalisation des noms de rue
 3. Ajouter des overrides manuels pour les cas ambigus
-4. Ajouter un fallback d'entrée manuelle d'adresse
+4. Ajouter quelques exemples / démos prêts à l’emploi
 5. Décider quand passer à une V2 avec backend
