@@ -34,12 +34,17 @@ Site web de géolocalisation qui raconte l'histoire de la personne, du lieu ou d
 Les faits viennent de sources structurées.
 Le LLM sert uniquement à condenser l'information en quelques bullets points lisibles.
 
-## Stack recommandée
+## Stack de démarrage actuelle
 
-- Front : Next.js + Tailwind
-- API : routes Next.js
-- Cache : SQLite au début, Postgres plus tard si besoin
-- Cartographie optionnelle : Leaflet
+Pour aller vite avec GitHub Pages, la V1 est volontairement **statique** :
+
+- Front : HTML + CSS + JavaScript vanilla
+- Hébergement : GitHub Pages
+- Géolocalisation : navigateur
+- Reverse geocoding : API Géoplateforme / BAN
+- Connaissance : Wikipédia + Wikidata + Wikimedia Commons
+
+Une V2 pourra migrer vers Next.js si on veut un backend, du cache serveur, des overrides éditoriaux ou des appels LLM plus propres.
 
 ## V1
 
@@ -63,10 +68,17 @@ Le LLM sert uniquement à condenser l'information en quelques bullets points lis
 - Certaines rues ne renvoient pas à une personne mais à un lieu, une date ou une bataille
 - La qualité du produit dépend fortement de la normalisation et du matching
 
+## Structure actuelle
+
+- `docs/index.html` : interface principale
+- `docs/styles.css` : styles
+- `docs/app.js` : logique front, géolocalisation, reverse geocoding, matching Wikipédia/Wikidata
+- GitHub Pages publie le dossier `docs/` depuis la branche `main`
+
 ## Priorités techniques immédiates
 
-1. Faire un proof of concept de reverse geocoding
-2. Définir une pipeline de normalisation des noms de rue
-3. Tester la résolution Wikidata / Wikipedia sur 20 rues réelles
-4. Construire l'API `GET /api/story?lat=...&lng=...`
-5. Créer une UI mobile simple
+1. Tester la V1 sur plusieurs rues réelles
+2. Améliorer la normalisation des noms de rue
+3. Ajouter des overrides manuels pour les cas ambigus
+4. Ajouter un fallback d'entrée manuelle d'adresse
+5. Décider quand passer à une V2 avec backend

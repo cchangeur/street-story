@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Street Story</title>
+    <meta
+      name="description"
+      content="Découvre l'histoire de la rue où tu te trouves, à partir de ta géolocalisation."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Street Story</p>
+        <h1>L’histoire de la rue où tu es</h1>
+        <p class="hero-copy">
+          Géolocalise-toi, détecte la rue autour de toi, puis récupère une fiche
+          courte sur la personne, le lieu ou l’événement derrière son nom.
+        </p>
+
+        <div class="hero-actions">
+          <button id="locateButton" class="button button-primary">
+            Me géolocaliser
+          </button>
+          <button id="demoButton" class="button button-secondary">
+            Tester avec un exemple
+          </button>
+        </div>
+
+        <p class="hero-note">
+          V1 100 % statique, pensée pour GitHub Pages. Les données viennent de
+          la Géoplateforme, Wikipédia, Wikidata et Wikimedia Commons.
+        </p>
+      </section>
+
+      <section class="panel panel-status">
+        <div>
+          <p class="panel-label">Statut</p>
+          <p id="statusText">Prêt.</p>
+        </div>
+        <div class="status-grid">
+          <div>
+            <p class="panel-label">Adresse détectée</p>
+            <p id="addressText">Aucune adresse chargée</p>
+          </div>
+          <div>
+            <p class="panel-label">Nom de rue exploité</p>
+            <p id="streetText">-</p>
+          </div>
+          <div>
+            <p class="panel-label">Recherche</p>
+            <p id="queryText">-</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="storyCard" class="panel story-card hidden">
+        <div class="story-layout">
+          <div class="story-media-wrap">
+            <img id="storyImage" class="story-media" alt="Illustration" />
+          </div>
+          <div class="story-content">
+            <div class="story-heading">
+              <p id="storyType" class="story-type"></p>
+              <h2 id="storyTitle"></h2>
+              <p id="storyDescription" class="story-description"></p>
+            </div>
+
+            <ul id="storyBullets" class="story-bullets"></ul>
+
+            <div id="storyRelatedWrap" class="related-wrap hidden">
+              <p class="panel-label">Personnes / liens associés</p>
+              <div id="storyRelated" class="related-list"></div>
+            </div>
+
+            <div id="storySources" class="sources"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="errorCard" class="panel error-card hidden">
+        <p class="panel-label">Problème</p>
+        <p id="errorText"></p>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
